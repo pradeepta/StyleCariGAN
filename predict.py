@@ -18,6 +18,7 @@ from align import ImageAlign
 from invert import *
 import urllib.request
 
+
 class Predictor(BasePredictor):
     def setup(self):
         self.device = "cuda" if torch.cuda.is_available() else 'cpu'
@@ -85,15 +86,6 @@ class Predictor(BasePredictor):
         w = torch.cat(w, dim=0)
         self.args.mean_w = w.mean(dim=0)
 
-<<<<<<< HEAD
-    @cog.input("image_url", type=Path, help="Input image url only supports images with .png and .jpg extensions")
-    @cog.input("num_samples", type=int, options=[1, 4, 9], default=1,
-               help="Valid when output_type is png. Choose number of samples to view in a grid")
-    @cog.input("output_type", type=str, options=['png', 'zip'], default='png',
-               help="Output a png file with num_samples in a grid, or a zip file with all 64 samples")
-    def predict(self, image_url, output_type='png', num_samples=1):
-        image = urllib.request.urlretrieve(image_url)
-=======
     #@cog.input("image_url", type=Path, help="Input image url only supports images with .png and .jpg extensions")
     #@cog.input("num_samples", type=int, options=[1, 4, 9], default=1,
     #           help="Valid when output_type is png. Choose number of samples to view in a grid")
@@ -103,7 +95,6 @@ class Predictor(BasePredictor):
     def predict(self, image_url:str = Input(description="Input image url only supports images with .png and .jpg extensions"), output_type:str = Input(description="Output a png file with num_samples in a grid, or a zip file with all 64 samples", default='png'), num_samples:int = Input(description="Valid when output_type is png. Choose number of samples to view in a grid", default=1))->Path:
         image, headers = urllib.request.urlretrieve(image_url, filename='input.jpg')
         print(f'image : {image}')
->>>>>>> e2831fd (Fixed build issues https://github.com/replicate/cog/issues/427#issuecomment-1423455458)
         # set input folder
         assert str(image).split('.')[-1] in ['png', 'jpg'], 'image should end with ".jpg" or ".png"'
         input_dir = 'input_cog_temp'
